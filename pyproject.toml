@@ -15,6 +15,11 @@ start = "app.main:start"
 python = "^3.10"
 fastapi = "^0.112.1"
 uvicorn = {extras = ["standard"], version = "^0.30.6"}
+aiohttp = "^3.10.5"
+pydantic-settings = "^2.4.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3.2"
 
 [build-system]
 requires = ["poetry-core"]
