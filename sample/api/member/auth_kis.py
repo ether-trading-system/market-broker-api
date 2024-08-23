@@ -1,11 +1,9 @@
-from fastapi import APIRouter, HTTPException, Depends, Query
-from fastapi.responses import RedirectResponse
-from app.schemas.user import UserCreate, UserResponse
-from app.models.user import User
-from datetime import datetime, timedelta
+from fastapi import APIRouter, HTTPException
+from sample.schemas.user import UserResponse
+from sample.models.user import User
+from datetime import datetime
 from typing import List
 from pydantic import BaseModel
-import uuid
 import requests
 import logging
 
