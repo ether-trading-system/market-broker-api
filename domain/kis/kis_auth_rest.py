@@ -4,10 +4,10 @@ from .dto import TokenPRequest, TokenPResponse
 from .kis_exception import kis_error_handler
 
 
-class KisRest:
+class KisAuthRest:
     _client = Optional[RestClient]
 
-    async def __aenter__(self) -> "KisRest":
+    async def __aenter__(self) -> "KisAuthRest":
         self._client = RestClient(
             headers={"Content-Type": "application/json"},
             base_url=settings.kis_base_url
@@ -27,3 +27,6 @@ class KisRest:
             )
 
             return await client.post('/oauth2/tokenP', body, TokenPResponse)
+
+
+kis_rest = KisAuthRest()

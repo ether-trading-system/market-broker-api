@@ -3,12 +3,12 @@ import pytest
 from http import HTTPStatus
 from core import settings
 from .kis_exception import KisException, KisErrorCode
-from .kis_rest import KisRest
+from .kis_auth_rest import KisAuthRest
 
 
 @pytest.mark.asyncio
 async def test_get_token():
-    async with KisRest() as rest:
+    async with KisAuthRest() as rest:
         app_key = settings.kis_real_app_key
         app_secret = settings.kis_real_app_secret
 
@@ -20,7 +20,7 @@ async def test_get_token():
 @pytest.mark.asyncio
 async def test_get_token_with_kis_error():
     with pytest.raises(KisException) as error:
-        async with KisRest() as rest:
+        async with KisAuthRest() as rest:
             app_key = settings.kis_real_app_key
             app_secret = settings.kis_real_app_secret
 
