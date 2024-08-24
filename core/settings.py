@@ -7,8 +7,11 @@ env = os.environ.get("ENV", "")
 
 
 class Settings(BaseSettings):
-    kis_real_base_url: Field(alias='KIS_REAL_BASE_URL')
-    kis_base_url: Field(alias='KIS_BASE_URL')
+    service_name: str = Field(alias='SERVICE_NAME')
+    kis_real_base_url: str = Field(alias='KIS_REAL_BASE_URL')
+    kis_real_app_key: str = Field(alias='KIS_REAL_APP_KEY')
+    kis_real_app_secret: str = Field(alias='KIS_REAL_APP_SECRET')
+    kis_base_url: str = Field(alias='KIS_BASE_URL')
 
     model_config = SettingsConfigDict(
         env_file_encoding='utf-8',
