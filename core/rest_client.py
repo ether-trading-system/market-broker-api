@@ -1,11 +1,21 @@
+import json
 from dataclasses import asdict
 from typing import Optional, Any, Generic, TypeVar, Union, List
 
-from aiohttp import ClientSession, TCPConnector, ClientTimeout
+from aiohttp import ClientSession, TCPConnector, ClientTimeout, ClientResponse
 from aiohttp.typedefs import StrOrURL, LooseCookies
 from pydantic import BaseModel
 
+from .exception import EtherRestClientException
+
 T = TypeVar('T', bound=Union[BaseModel, List[BaseModel]])
+
+
+async def handle_response(response: ClientResponse) -> Any:
+    res = await response.json()
+    if response.ok:
+        return res
+    raise EtherRestClientException(response, res)
 
 
 class RestClient:
@@ -28,6 +38,7 @@ class RestClient:
             cookies=cookies,
             headers=headers,
             raise_for_status=True,
+            json_serialize=json.dumps,
             timeout=ClientTimeout(3),
             **kwargs
         )
@@ -52,8 +63,8 @@ class RestClient:
         return response_type(**data)
 
     async def post(self, url, body: Any, response_type: Generic[T], **kwargs) -> T:
-        res = await self._client.post(url, json=asdict(body), **kwargs)
-        data = await res.json()
+        res = await self._client.post(url, json=asdict(body), raise_for_status=False, **kwargs)
+        data = await handle_response(res)
         return response_type(**data)
 
     async def put(self, url, body: Any, response_type: Generic[T], **kwargs) -> T:
