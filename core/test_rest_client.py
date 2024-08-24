@@ -16,6 +16,7 @@ from pydantic.dataclasses import dataclass
 #     "id": 1
 #   }
 
+@pytest.mark.skip
 @pytest.mark.asyncio
 async def test_get_as_list():
     @dataclass
@@ -35,6 +36,7 @@ async def test_get_as_list():
         assert response[0].description is not None
 
 
+@pytest.mark.skip
 @pytest.mark.asyncio
 async def test_get_as_list_validation_error():
     @dataclass

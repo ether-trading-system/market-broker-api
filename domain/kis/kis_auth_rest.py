@@ -27,6 +27,3 @@ class KisAuthRest:
             )
 
             return await client.post('/oauth2/tokenP', body, TokenPResponse)
-
-
-kis_rest = KisAuthRest()

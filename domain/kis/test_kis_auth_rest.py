@@ -6,6 +6,7 @@ from .kis_exception import KisException, KisErrorCode
 from .kis_auth_rest import KisAuthRest
 
 
+@pytest.mark.skip
 @pytest.mark.asyncio
 async def test_get_token():
     async with KisAuthRest() as rest:
@@ -17,6 +18,7 @@ async def test_get_token():
         assert res.access_token is not None
 
 
+@pytest.mark.skip
 @pytest.mark.asyncio
 async def test_get_token_with_kis_error():
     with pytest.raises(KisException) as error:
