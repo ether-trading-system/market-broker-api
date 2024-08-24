@@ -54,12 +54,12 @@ class RestClient:
 
     async def get_as_list(self, url: StrOrURL, response_type: Generic[T], **kwargs: Any) -> List[T]:
         res = await self._client.get(url, **kwargs)
-        data = await res.json()
+        data = await handle_response(res)
         return [item for item in map(lambda item: response_type(**item), data)]
 
     async def get(self, url: StrOrURL, response_type: Generic[T], **kwargs: Any) -> T:
         res = await self._client.get(url, **kwargs)
-        data = await res.json()
+        data = await handle_response(res)
         return response_type(**data)
 
     async def post(self, url, body: Any, response_type: Generic[T], **kwargs) -> T:
@@ -69,15 +69,17 @@ class RestClient:
 
     async def put(self, url, body: Any, response_type: Generic[T], **kwargs) -> T:
         res = await self._client.put(url, json=asdict(body), **kwargs)
-        data = await res.json()
+        data = await handle_response(res)
         return response_type(**data)
 
     async def patch(self, url, body: Any, response_type: Generic[T], **kwargs) -> T:
         res = await self._client.patch(url, json=asdict(body), **kwargs)
-        data = await res.json()
+        data = await handle_response(res)
         return response_type(**data)
 
-    async def delete(self, url, response_type: Generic[T], **kwargs) -> T:
+    async def delete(self, url, response_type: Optional[Generic[T]], **kwargs) -> Optional[T]:
         res = await self._client.delete(url, **kwargs)
-        data = await res.json()
+        data = await handle_response(res)
+        if response_type is None:
+            return None
         return response_type(**data)
