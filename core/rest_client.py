@@ -38,7 +38,7 @@ class RestClient:
             connector=TCPConnector(ssl=False),
             cookies=cookies,
             headers=headers,
-            raise_for_status=True,
+            raise_for_status=False,
             json_serialize=json.dumps,
             timeout=ClientTimeout(3),
             **kwargs
@@ -64,7 +64,7 @@ class RestClient:
         return response_type(**data)
 
     async def post(self, url, body: Any, response_type: Generic[T], **kwargs: Unpack[_RequestOptions]) -> T:
-        res = await self._client.post(url, json=asdict(body), raise_for_status=False, **kwargs)
+        res = await self._client.post(url, json=asdict(body), **kwargs)
         data = await handle_response(res)
         return response_type(**data)
 
