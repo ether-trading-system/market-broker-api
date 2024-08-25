@@ -1,7 +1,7 @@
 import json
 
 from dataclasses import asdict
-from typing import Optional, Any, Generic, TypeVar, Union, List, Unpack
+from typing import Optional, Any, TypeVar, Union, List, Unpack, Type
 from aiohttp import ClientSession, TCPConnector, ClientTimeout, ClientResponse
 from aiohttp.client import _RequestOptions
 from aiohttp.typedefs import StrOrURL, LooseCookies
@@ -53,32 +53,32 @@ class RestClient:
     async def close(self) -> None:
         await self._client.close()
 
-    async def get_as_list(self, url: StrOrURL, response_type: Generic[T], **kwargs: Unpack[_RequestOptions]) -> List[T]:
+    async def get_as_list(self, url: StrOrURL, response_type: Type[T], **kwargs: Unpack[_RequestOptions]) -> List[T]:
         res = await self._client.get(url, **kwargs)
         data = await handle_response(res)
         return [item for item in map(lambda item: response_type(**item), data)]
 
-    async def get(self, url: StrOrURL, response_type: Generic[T], **kwargs: Unpack[_RequestOptions]) -> T:
+    async def get(self, url: StrOrURL, response_type: Type[T], **kwargs: Unpack[_RequestOptions]) -> T:
         res = await self._client.get(url, **kwargs)
         data = await handle_response(res)
         return response_type(**data)
 
-    async def post(self, url, body: Any, response_type: Generic[T], **kwargs: Unpack[_RequestOptions]) -> T:
+    async def post(self, url, body: Any, response_type: Type[T], **kwargs: Unpack[_RequestOptions]) -> T:
         res = await self._client.post(url, json=asdict(body), **kwargs)
         data = await handle_response(res)
         return response_type(**data)
 
-    async def put(self, url, body: Any, response_type: Generic[T], **kwargs: Unpack[_RequestOptions]) -> T:
+    async def put(self, url, body: Any, response_type: Type[T], **kwargs: Unpack[_RequestOptions]) -> T:
         res = await self._client.put(url, json=asdict(body), **kwargs)
         data = await handle_response(res)
         return response_type(**data)
 
-    async def patch(self, url, body: Any, response_type: Generic[T], **kwargs: Unpack[_RequestOptions]) -> T:
+    async def patch(self, url, body: Any, response_type: Type[T], **kwargs: Unpack[_RequestOptions]) -> T:
         res = await self._client.patch(url, json=asdict(body), **kwargs)
         data = await handle_response(res)
         return response_type(**data)
 
-    async def delete(self, url, response_type: Optional[type[T]], **kwargs: Unpack[_RequestOptions]) -> Optional[T]:
+    async def delete(self, url, response_type: Optional[Type[T]], **kwargs: Unpack[_RequestOptions]) -> Optional[T]:
         res = await self._client.delete(url, **kwargs)
         data = await handle_response(res)
         if response_type is None:
