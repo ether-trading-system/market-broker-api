@@ -1,15 +1,11 @@
-from enum import Enum
-
+from domain.account.constants import AccountProvider
 from domain.kis import KisAccountBalanceService
-
-
-class AccountProvider(Enum):
-    KIS = 'kis'
-
 
 balanceMap = {
     AccountProvider.KIS: KisAccountBalanceService()
 }
+
+assert len(balanceMap) == len(AccountProvider)
 
 
 class AccountBalanceFactory:
@@ -21,5 +17,3 @@ class AccountBalanceFactory:
                 return balanceMap[provider]
             case _:
                 raise ValueError('Invalid provider')
-
-
