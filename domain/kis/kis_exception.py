@@ -6,6 +6,7 @@ from core import EtherException, EtherRestClientException
 
 class KisErrorCode(Enum):
     ACCESS_TOKEN_RATE_LIMIT_EXCEEDED = 'ACCESS_TOKEN_RATE_LIMIT_EXCEEDED'
+    INVALID_APP_KEY = 'INVALID_APP_KEY'
     INVALID_APP_KEY_OR_SECRET = 'INVALID_APP_KEY_OR_SECRET'
     UNKNOWN = 'UNKNOWN'
 
@@ -14,7 +15,9 @@ error_map = {
     # {'error_code': 'EGW00133', 'error_description': '접근토큰 발급 잠시 후 다시 시도하세요(1분당 1회)'}
     'EGW00133': KisErrorCode.ACCESS_TOKEN_RATE_LIMIT_EXCEEDED,
     # {'error_code': 'EGW00002', 'error_description': '서버 에러가 발생했습니다.'}
-    'EGW00002': KisErrorCode.INVALID_APP_KEY_OR_SECRET
+    'EGW00002': KisErrorCode.INVALID_APP_KEY_OR_SECRET,
+    # {'error_code': 'EGW00103', 'error_description': '유효하지 않은 AppKey입니다.'}
+    'EGW00103': KisErrorCode.INVALID_APP_KEY,
 }
 
 
