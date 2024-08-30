@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
 
-from domain.account import AccountProvider, AccountBalanceFactory
+from domain.account.account_balance_factory import AccountProvider, AccountBalanceFactory
 
 router = APIRouter()
 

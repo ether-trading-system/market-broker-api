@@ -1,6 +1,6 @@
 import pytest
 
-from domain.kis.kis_account_balance_service import KisAccountBalanceService
+from .kis_account_balance_service import KisAccountBalanceService
 
 
 @pytest.mark.skip

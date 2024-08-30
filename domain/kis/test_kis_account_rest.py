@@ -1,6 +1,6 @@
 import pytest
 
-from domain.kis.kis_account_rest import KisAccountRest
+from .kis_account_rest import KisAccountRest
 
 
 @pytest.mark.asyncio

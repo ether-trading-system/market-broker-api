@@ -1,5 +1,5 @@
-from domain.account.constants import AccountProvider
-from domain.kis import KisAccountBalanceService
+from .constants import AccountProvider
+from domain.kis.kis_account_balance_service import KisAccountBalanceService
 
 balanceMap = {
     AccountProvider.KIS: KisAccountBalanceService()
