@@ -226,6 +226,26 @@ files = [
 ]
 
 [[package]]
+name = "common"
+version = "0.0.1"
+description = "A common library for the project."
+optional = false
+python-versions = "^3.10"
+files = []
+develop = false
+
+[package.dependencies]
+aiohttp = "^3.10.3"
+fastapi = "^0.112.1"
+pydantic-settings = "^2.4.0"
+
+[package.source]
+type = "git"
+url = "https://github.com/ether-trading-system/common.git"
+reference = "HEAD"
+resolved_reference = "976313d1e0231ce76fe2405129feb89a1899d11c"
+
+[[package]]
 name = "exceptiongroup"
 version = "1.2.2"
 description = "Backport of PEP 654 (exception groups)"
@@ -1248,4 +1268,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "b9f7e743b400670793c829ed5df48ec14edcbfaec5d0585f25d49decadd4286e"
+content-hash = "8c6be749db116c11d84267c0bba8a09a5713a4a4b4e6ea795f66d16ea14ea02a"
