@@ -1,6 +1,7 @@
 from dataclasses import asdict
 from typing import Optional
-from core import settings, RestClient
+from common import RestClient
+from core import settings
 from .dto import InquireBalanceRequestQuery, TokenPResponse, InquireBalanceResponse
 from .kis_auth_rest import KisAuthRest
 from .kis_exception import kis_error_handler

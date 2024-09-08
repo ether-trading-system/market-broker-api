@@ -1,11 +1,12 @@
 import uvicorn
+from common import register_exception_handler
 from fastapi import FastAPI
 from .routers import accounts_router
 
 app = FastAPI()
-
 app.include_router(accounts_router)
 
+register_exception_handler(app)
 
 @app.get("/")
 async def root():

@@ -1,5 +1,7 @@
 from typing import Optional
-from core import settings, RestClient
+
+from common import RestClient
+from core import settings
 from .dto import TokenPRequest, TokenPResponse
 from .kis_exception import kis_error_handler
 
