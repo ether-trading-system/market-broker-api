@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     env: str = Field(alias='ENV')
     service_name: str = Field(alias='SERVICE_NAME')
     kis_base_url: str = Field(alias='KIS_BASE_URL')
+    kis_websocket_url: str = Field(alias='KIS_WEBSOCKET_URL')
 
     model_config = SettingsConfigDict(
         env_file_encoding='utf-8',

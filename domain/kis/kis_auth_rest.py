@@ -2,7 +2,7 @@ from typing import Optional
 
 from common import RestClient
 from core import settings
-from .dto import TokenPRequest, TokenPResponse
+from .dto import TokenPRequest, TokenPResponse, ApprovalResponse, ApprovalRequest
 from .kis_exception import kis_error_handler
 
 
@@ -29,3 +29,14 @@ class KisAuthRest:
             )
 
             return await client.post('/oauth2/tokenP', body, TokenPResponse)
+
+    @kis_error_handler
+    async def get_websocket_key(self, app_key: str, app_secret: str) -> ApprovalResponse:
+        async with self._client as client:
+            body = ApprovalRequest(
+                grant_type='client_credentials',
+                appkey=app_key,
+                secretkey=app_secret
+            )
+
+            return await client.post('/oauth2/Approval', body, ApprovalResponse)
