@@ -18,6 +18,10 @@ uvicorn = {extras = ["standard"], version = "^0.30.6"}
 aiohttp = "^3.10.5"
 pydantic-settings = "^2.4.0"
 common = {git = "https://github.com/ether-trading-system/common.git"}
+alembic = "^1.13.2"
+sqlalchemy = "^2.0.35"
+aiocache = "^0.12.2"
+psycopg2-binary = "^2.9.9"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
