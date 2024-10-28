@@ -6,6 +6,7 @@ from .routers import accounts_router
 app = FastAPI()
 app.include_router(accounts_router)
 
+# 예외처리 공통 메시지 등록
 register_exception_handler(app)
 
 @app.get("/")
