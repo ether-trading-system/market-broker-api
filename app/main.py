@@ -1,10 +1,11 @@
 import uvicorn
 from common import register_exception_handler
 from fastapi import FastAPI
-from .routers import accounts_router
+from .routers import accounts_router, auth_router
 
 app = FastAPI()
 app.include_router(accounts_router)
+app.include_router(auth_router, prefix="/member")
 
 # 예외처리 공통 메시지 등록
 register_exception_handler(app)
