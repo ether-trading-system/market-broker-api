@@ -18,7 +18,7 @@ uvicorn = {extras = ["standard"], version = "^0.30.6"}
 aiohttp = "^3.10.5"
 pydantic-settings = "^2.4.0"
 common = {git = "https://github.com/ether-trading-system/common.git"}
-requests = "^2.32.3"
+httpx = "^0.27.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"

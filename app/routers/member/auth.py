@@ -1,5 +1,6 @@
 from fastapi import APIRouter
-import requests
+from app.exceptions.kis_exception import kis_error_handler
+import httpx
 
 router = APIRouter()
 
@@ -11,17 +12,11 @@ REQ_REMOVE_TOKEN = "/oauth2/revokeP"        # 접속토큰 폐기
 
 @router.post("/get-token", tags=["auth"])
 async def get_token(url: str, api_key: str, app_secret: str):
-    
-    msg = []
-    try:
-        response = requests.post(f"{url}{REQ_GET_ACCESS_TOKEN}", json={
+    async with httpx.AsyncClient() as client:
+        response = await client.post(f"{url}{REQ_GET_ACCESS_TOKEN}", json={
             "grant_type": "client_credentials",     # 고정
             "appkey": api_key,
-            "appsecret": app_secret
+            "appsecret": app_secret,
         })
         
-        msg = response.json()
-    except Exception as e:
-        msg = [{ "message": "error occurred" }, { "error code": -1 }]
-        
-    return msg
+        return response.json()
