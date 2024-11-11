@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from app.exceptions.kis_exception import kis_error_handler
 from core.config_manager import config_manager
+from core.settings import get_kis_api_info
 import httpx
 
 router = APIRouter()
@@ -17,16 +18,14 @@ config_manager.set("KIS_APP_SECRET", "DZxy0nVMEmkDEaEg4bVqmpjA4z+eWQ6kZ/z4hs68UG
 
 
 @router.post("/get-token", tags=["auth"])
-async def get_token(url_kind: str):
+async def get_token(user_id: str, url_kind: str):
     config_manager.set("url_kind", url_kind)  # "simulate" 또는 "real"
     
     base_url = config_manager.get_base_url()
     api_key = config_manager.get("KIS_APP_KEY")
     app_secret = config_manager.get("KIS_APP_SECRET")
     
-    print(f"base_url : {base_url}")
-    print(f"api_key : {api_key}")
-    print(f"app_secret : {app_secret}")
+    print(get_kis_api_info())
     
     async with httpx.AsyncClient() as client:
         response = await client.post(f"{base_url}{REQ_GET_ACCESS_TOKEN}", json={
