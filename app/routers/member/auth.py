@@ -12,13 +12,8 @@ REQ_GET_ACCESS_TOKEN = "/oauth2/tokenP"     # 접속토큰 발급
 REQ_REMOVE_TOKEN = "/oauth2/revokeP"        # 접속토큰 폐기
 
 
-config_manager.set("URL_KIND", "simulate")
-config_manager.set("KIS_APP_KEY", "PS2ZuCSGIUOU4R0M3UYVxaWsDMSYYecvAtYV")
-config_manager.set("KIS_APP_SECRET", "DZxy0nVMEmkDEaEg4bVqmpjA4z+eWQ6kZ/z4hs68UGKgSP/GRIQ9xPqW01hQba15Jx7L73snAAdfJ+iiyypXuRDgrppTgWWtVg84BGzxHQFf60E3YxMyX1GTizCzUV4Zsns40rUwaZYVHYOpXuwcWVyL9sEEazNY+caPNc4iE17KfwEtGM4=")
-
-
 @router.post("/get-token", tags=["auth"])
-async def get_token(user_id: str, url_kind: str):
+async def get_token(url_kind: str):
     config_manager.set("url_kind", url_kind)  # "simulate" 또는 "real"
     
     base_url = config_manager.get_base_url()
