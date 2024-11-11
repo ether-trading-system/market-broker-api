@@ -2,7 +2,7 @@
 name = "market-broker-api"
 version = "0.1.0"
 description = ""
-authors = ["corn <dalcon10280@gmail.com>"]
+authors = ["corn <kimdaewhi@naver.com>"]
 readme = "README.md"
 packages = [
     { include = "app" }
