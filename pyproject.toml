@@ -14,7 +14,7 @@ start = "app.main:start"
 [tool.poetry.dependencies]
 python = "^3.10"
 fastapi = "^0.112.1"
-uvicorn = {extras = ["standard"], version = "^0.30.6"}
+uvicorn = "0.31.0"
 aiohttp = "^3.10.5"
 pydantic-settings = "^2.4.0"
 common = {git = "https://github.com/ether-trading-system/common.git"}
