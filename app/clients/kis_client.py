@@ -1,5 +1,6 @@
 import httpx
 import logging
+from app.exceptions.kis_response_handler import HTTPResponseHandler
 
 class KISClient:
     BASE_URL_SIMULATE = "https://openapivts.koreainvestment.com:29443"
@@ -24,5 +25,6 @@ class KISClient:
         }
         async with httpx.AsyncClient() as client:
             response = await client.post(url, json=payload)
-            response.raise_for_status()  # 상태 코드가 200이 아니면 예외 발생
-            return response.json()
+            # response.raise_for_status()  # 상태 코드가 200이 아니면 예외 발생
+            # return response.json()
+            return HTTPResponseHandler.parse_response(response)
