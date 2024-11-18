@@ -4,6 +4,7 @@ from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from app.services.auth_service import AuthService
 
+import logging
 import httpx
 
 router = APIRouter()
@@ -26,18 +27,27 @@ class TokenRequest(BaseModel):
 
 @router.post("/get-token", tags=["auth"])
 async def get_token(request: TokenRequest):
-    """API Key와 app secret으로 토큰을 가져오거나 갱신"""
-    # 서비스 레이어에서 토큰을 가져오거나 갱신하도록 요청
-    response = await AuthService.get_or_refresh_token(
-        url_div=request.url_div, 
-        api_key=request.api_key, 
-        app_secret=request.app_secret, 
-        access_token=request.access_token,
-        expires_at=request.expires_at
-    )
-    
-    # header와 data를 클라이언트에 반환
-    if response["header"]["res_code"] != 200:
-        raise HTTPException(status_code=response["header"]["res_code"], detail=response["data"])
+    """
+    API Key와 App Secret으로 토큰을 가져오거나 갱신.
+    표준화된 응답 구조:
+    - header: 상태 코드
+    - data: 토큰 정보 또는 에러 정보
+    """
+    try:
+        # 서비스 레이어에서 토큰을 가져오거나 갱신하도록 요청
+        response = await AuthService.get_or_refresh_token(
+            url_div=request.url_div, 
+            api_key=request.api_key, 
+            app_secret=request.app_secret, 
+            access_token=request.access_token,
+            expires_at=request.expires_at
+        )
+        return response  # 성공과 실패 모두 표준 구조로 반환
 
-    return response
+    except Exception as e:
+        logging.error(f"Unexpected error occurred: {e}")
+        # 표준화된 실패 응답 반환
+        return {
+            "header": {"res_code": 500},
+            "data": {"error_description": str(e), "error_code": "UNEXPECTED_ERROR"}
+        }
