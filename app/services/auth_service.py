@@ -11,11 +11,11 @@ class AuthService:
             token_info = await KISClient.get_access_token(url_div, api_key, app_secret)
             access_token = token_info["access_token"]
             expires_in = token_info["expires_in"]
-            access_token_token_expired = token_info["access_token_token_expired"]
+            expires_at = token_info["access_token_token_expired"]
         
         return {
             "access_token": access_token,
             "expires_in": expires_in,
             "token_type": "Bearer",      # 고정
-            "access_token_token_expired": access_token_token_expired
+            "access_token_token_expired": expires_at
         }
