@@ -5,7 +5,6 @@ from fastapi import APIRouter, HTTPException
 from app.services.auth_service import AuthService
 
 import logging
-import httpx
 
 router = APIRouter()
 
