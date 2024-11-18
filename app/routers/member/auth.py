@@ -26,7 +26,7 @@ class TokenRequest(BaseModel):
 
 @router.post("/get-token", tags=["auth"])
 async def get_token(request: TokenRequest):
-    """API 키와 시크릿으로 토큰을 가져오거나 갱신"""
+    """API Key와 app secret으로 토큰을 가져오거나 갱신"""
     try:
         # 서비스 레이어에서 토큰을 가져오거나 갱신하도록 요청
         token_info = await AuthService.get_or_refresh_token(
@@ -37,7 +37,7 @@ async def get_token(request: TokenRequest):
             request.expires_at
         )
         print(token_info)
-        
+
         return token_info
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

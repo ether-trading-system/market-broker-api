@@ -1,4 +1,5 @@
 import httpx
+import logging
 
 class KISClient:
     BASE_URL_SIMULATE = "https://openapivts.koreainvestment.com:29443"
@@ -14,6 +15,7 @@ class KISClient:
         else:
             base_url = KISClient.BASE_URL_REAL
 
+        logging.info(f"[CLIENTS] base_url : {base_url}")
         url = f"{base_url}/oauth2/tokenP"
         payload = {
             "grant_type": "client_credentials",
