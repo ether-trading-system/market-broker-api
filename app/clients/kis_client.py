@@ -1,12 +1,20 @@
 import httpx
 
 class KISClient:
-    BASE_URL = "https://openapivts.koreainvestment.com:29443"
+    BASE_URL_SIMULATE = "https://openapivts.koreainvestment.com:29443"
+    BASE_URL_REAL = "https://openapivts.koreainvestment.com:29443"
 
     @staticmethod
-    async def get_access_token(api_key: str, app_secret: str) -> dict:
+    async def get_access_token(url_div: str, api_key: str, app_secret: str) -> dict:
         """한투 API에 토큰 요청을 보내고 응답을 반환"""
-        url = f"{KISClient.BASE_URL}/oauth2/tokenP"
+
+        # div_url에 따라 BASE_URL 설정
+        if url_div == "simulate":
+            base_url = KISClient.BASE_URL_SIMULATE
+        else:
+            base_url = KISClient.BASE_URL_REAL
+
+        url = f"{base_url}/oauth2/tokenP"
         payload = {
             "grant_type": "client_credentials",
             "appkey": api_key,

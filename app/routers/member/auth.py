@@ -1,5 +1,6 @@
 from fastapi import APIRouter
 from pydantic import BaseModel
+from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException
 from app.services.auth_service import AuthService
 
@@ -14,38 +15,29 @@ REQ_REMOVE_TOKEN = "/oauth2/revokeP"        # 접속토큰 폐기
 
 
 
-# class TokenRequest(BaseModel):
-#     url: str
-#     api_key: str
-#     app_secret: str
 
-
-
-
-# @router.post("/get-token", tags=["auth"])
-# async def get_token(request: TokenRequest):
-#     print(f"url : {request.url}")
-#     print(f"api_key : {request.api_key}")
-#     print(f"app_secret : {request.app_secret}")
-    
-#     async with httpx.AsyncClient() as client:
-#         response = await client.post(f"{request.url}{REQ_GET_ACCESS_TOKEN}", json={
-#             "grant_type": "client_credentials",  # 고정 값
-#             "appkey": request.api_key,
-#             "appsecret": request.app_secret,
-#         })
-        
-#         return response.json()
-
-
+class TokenRequest(BaseModel):
+    url_div: str
+    api_key: str
+    app_secret: str
+    access_token: str = None
+    expires_at: datetime = None
 
 
 @router.post("/get-token", tags=["auth"])
-async def get_token(api_key: str, app_secret: str):
+async def get_token(request: TokenRequest):
     """API 키와 시크릿으로 토큰을 가져오거나 갱신"""
     try:
         # 서비스 레이어에서 토큰을 가져오거나 갱신하도록 요청
-        token_info = await AuthService.get_or_refresh_token(api_key, app_secret, db_user=None)      # 필요하면 DB 추가
+        token_info = await AuthService.get_or_refresh_token(
+            request.url_div, 
+            request.api_key, 
+            request.app_secret, 
+            request.access_token,
+            request.expires_at
+        )
+        print(token_info)
+        
         return token_info
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

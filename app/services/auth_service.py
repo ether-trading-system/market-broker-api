@@ -3,18 +3,17 @@ from datetime import datetime, timedelta
 
 class AuthService:
     @staticmethod
-    async def get_or_refresh_token(api_key: str, app_secret: str, db_user) -> dict:
+    async def get_or_refresh_token(url_div: str, api_key: str, app_secret: str, access_token: str, expires_at: datetime) -> dict:
         """토큰 만료 시간을 확인 -> 갱신할여부를 판단 & 처리"""
-        if db_user.access_token_expires < datetime.now():
-            # 토큰이 만료되었으므로 갱신
-            token_info = await KISClient.get_access_token(api_key, app_secret)
-            db_user.access_token = token_info["access_token"]
-            db_user.token_type = token_info["token_type"]
-            db_user.expires_in = token_info["expires_in"]
-            db_user.access_token_expires = datetime.now() + timedelta(seconds=db_user.expires_in)
-            # DB에 갱신된 토큰 정보 저장 로직 추가 필요
+        if not access_token or not expires_at or expires_at < datetime.now():
+            token_info = await KISClient.get_access_token(url_div, api_key, app_secret)
+            access_token = token_info["access_token"]
+            expires_in = token_info["expires_in"]
+            access_token_token_expired = token_info["access_token_token_expired"]
+        
         return {
-            "access_token": db_user.access_token,
-            "expires_in": db_user.expires_in,
-            "token_type": db_user.token_type,
+            "access_token": access_token,
+            "expires_in": expires_in,
+            "tonek_type": "Bearer",      # 고정
+            "access_token_token_expired": access_token_token_expired
         }
