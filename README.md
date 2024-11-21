@@ -8,6 +8,6 @@
 
 ```bash
 poetry install
-export ENV=local
+export ENV=local # windows 환경은 set ENV=local
 poetry run start
 ```
